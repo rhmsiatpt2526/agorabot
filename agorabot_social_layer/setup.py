@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'agorabot/agorabot_social_layer'
+package_name = 'agorabot_social_layer'
 
 setup(
     name=package_name,
