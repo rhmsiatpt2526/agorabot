@@ -2,6 +2,14 @@ amcl:
   ros__parameters:
     use_sim_time: True
 
+    set_initial_pose: True
+    
+    initial_pose: 
+      x: 0.0
+      y: 0.0
+      z: 0.0
+      yaw: 0.0
+
 bt_navigator:
   ros__parameters:
     use_sim_time: True
