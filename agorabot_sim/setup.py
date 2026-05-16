@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'agorabot/agorabot_sim'
+package_name = 'agorabot_sim'
 
 setup(
     name=package_name,

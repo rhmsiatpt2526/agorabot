@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'agorabot/agorabot_social_layer'
+package_name = 'agorabot_social_layer'
 
 setup(
     name=package_name,
@@ -24,6 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'human_markers_node = agorabot_social_layer.human_markers_node:main',
         ],
     },
 )
