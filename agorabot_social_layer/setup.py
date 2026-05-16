@@ -25,6 +25,7 @@ setup(
     entry_points={
         'console_scripts': [
             'human_markers_node = agorabot_social_layer.human_markers_node:main',
+            'social_costmap_node = agorabot_social_layer.social_costmap_node:main',
         ],
     },
 )
