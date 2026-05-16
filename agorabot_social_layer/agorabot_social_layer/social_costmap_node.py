@@ -124,14 +124,14 @@ class SocialCostmapNode(Node):
                     #
 
                     elif distance < 1.2:
-                        cost = 70
+                        cost = 100
 
                     #
                     # SOCIAL ZONE
                     #
 
                     elif distance < 2.0:
-                        cost = 40
+                        cost = 80
 
                     #
                     # WRITE COST
