@@ -2,8 +2,14 @@ from launch import LaunchDescription
 
 from launch_ros.actions import Node
 
-from launch.actions import IncludeLaunchDescription
+from launch.actions import (
+    IncludeLaunchDescription,
+    DeclareLaunchArgument
+)
+
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+
+from launch.substitutions import LaunchConfiguration
 
 from ament_index_python.packages import get_package_share_directory
 
@@ -12,6 +18,22 @@ import os
 
 def generate_launch_description():
 
+    #
+    # Scenario argument
+    #
+
+    scenario_arg = DeclareLaunchArgument(
+        'scenario',
+        default_value='agents_house.yaml',
+        description='HuNav scenario YAML file'
+    )
+
+    scenario = LaunchConfiguration('scenario')
+
+    #
+    # HuNav launch
+    #
+
     hunav_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(
@@ -19,8 +41,16 @@ def generate_launch_description():
                 'launch',
                 'small_house.launch.py'
             )
-        )
+        ),
+
+        launch_arguments={
+            'configuration_file': scenario
+        }.items()
     )
+
+    #
+    # Human markers node
+    #
 
     human_markers_node = Node(
         package='agorabot_social_layer',
@@ -29,12 +59,20 @@ def generate_launch_description():
         output='screen'
     )
 
+    #
+    # Social costmap node
+    #
+
     social_costmap_node = Node(
         package='agorabot_social_layer',
         executable='social_costmap_node',
         name='social_costmap_node',
         output='screen'
     )
+
+    #
+    # Social behavior node
+    #
 
     social_behavior_node = Node(
         package='agorabot_social_layer',
@@ -43,9 +81,19 @@ def generate_launch_description():
         output='screen'
     )
 
+    #
+    # Launch everything
+    #
+
     return LaunchDescription([
+
+        scenario_arg,
+
         hunav_launch,
+
         human_markers_node,
+
         social_costmap_node,
+
         social_behavior_node
     ])
