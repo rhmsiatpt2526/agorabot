@@ -1,6 +1,7 @@
 #include "agorabot_social_layer_cpp/social_layer.hpp"
 
 #include <pluginlib/class_list_macros.hpp>
+#include <cmath>
 
 namespace agorabot_social_layer_cpp
 {
@@ -8,7 +9,6 @@ namespace agorabot_social_layer_cpp
 SocialLayer::SocialLayer()
 {
 }
-
 
 void SocialLayer::onInitialize()
 {
@@ -83,10 +83,38 @@ void SocialLayer::updateCosts(
         mx,
         my))
     {
-      master_grid.setCost(
-        mx,
-        my,
-        nav2_costmap_2d::LETHAL_OBSTACLE);
+      int radius_cells = 20;
+
+      for (int dx = -radius_cells; dx <= radius_cells; dx++) {
+
+        for (int dy = -radius_cells; dy <= radius_cells; dy++) {
+
+          int nx = static_cast<int>(mx) + dx;
+          int ny = static_cast<int>(my) + dy;
+
+          if (nx < 0 || ny < 0) {
+            continue;
+          }
+
+          if (nx >= static_cast<int>(master_grid.getSizeInCellsX()) ||
+              ny >= static_cast<int>(master_grid.getSizeInCellsY())) {
+            continue;
+          }
+
+          double distance = std::sqrt(dx * dx + dy * dy);
+
+          if (distance > radius_cells) {
+            continue;
+          }
+
+          double normalized = distance / radius_cells;
+
+          unsigned char cost =
+            static_cast<unsigned char>((1.0 - normalized) * 252.0);
+
+          master_grid.setCost(nx, ny, cost);
+        }
+      }
     }
   }
 }
@@ -95,7 +123,6 @@ void SocialLayer::reset()
 {
   current_ = true;
 }
-
 
 }  // namespace agorabot_social_layer_cpp
 
