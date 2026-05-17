@@ -82,6 +82,59 @@ def generate_launch_description():
     )
 
     #
+    # Keepout filter mask server
+    #
+
+    keepout_filter_mask_server = Node(
+        package='nav2_map_server',
+        executable='map_server',
+        name='keepout_filter_mask_server',
+        output='screen',
+        parameters=[{
+            'yaml_filename': os.path.join(
+                os.path.expanduser('~/ros2_ws/src/agorabot/maps'),
+                'social_keepout_mask.yaml'
+            ),
+            'topic_name': '/keepout_filter_mask',
+            'frame_id': 'map'
+        }]
+    )
+
+    #
+    # Costmap filter info server
+    #
+
+    costmap_filter_info_server = Node(
+        package='nav2_map_server',
+        executable='costmap_filter_info_server',
+        name='costmap_filter_info_server',
+        output='screen',
+        parameters=[{
+            'type': 0,
+            'filter_info_topic': '/costmap_filter_info',
+            'mask_topic': '/keepout_filter_mask',
+            'base': 0.0,
+            'multiplier': 1.0
+        }]
+    )
+
+
+    lifecycle_manager_filters = Node(
+        package='nav2_lifecycle_manager',
+        executable='lifecycle_manager',
+        name='lifecycle_manager_costmap_filters',
+        output='screen',
+        parameters=[{
+            'use_sim_time': True,
+            'autostart': True,
+            'node_names': [
+                'keepout_filter_mask_server',
+                'costmap_filter_info_server'
+            ]
+        }]
+    )
+
+    #
     # Launch everything
     #
 
@@ -95,5 +148,11 @@ def generate_launch_description():
 
         social_costmap_node,
 
-        social_behavior_node
+        social_behavior_node,
+
+        keepout_filter_mask_server,
+
+        costmap_filter_info_server,
+
+        lifecycle_manager_filters
     ])
