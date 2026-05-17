@@ -127,28 +127,80 @@ agorabot/
 ├── docs/                          # documentation
 ├── launch/                        # launch secondaires
 ├── worlds/                        # mondes Gazebo
+├── agorabot.repos                 # dépendances ROS2 externes
 └── README.md
 ```
 
 ---
 
-# Dépendances
+# Dépendances système
 
 ## ROS2
 
 - ROS2 Humble
 - Nav2
-- behaviortree_cpp_v3
 - Gazebo Classic
-- HuNavSim
+- behaviortree_cpp_v3
 
 Installation typique :
 
 ```bash
+sudo apt update
+
 sudo apt install ros-humble-nav2*
 sudo apt install ros-humble-navigation2
 sudo apt install ros-humble-behaviortree-cpp-v3
 sudo apt install ros-humble-gazebo-ros-pkgs
+sudo apt install python3-vcstool
+sudo apt install python3-rosdep
+```
+
+---
+
+# Installation
+
+## Création du workspace
+
+```bash
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws
+```
+
+---
+
+## Clone du projet
+
+```bash
+cd src
+
+git clone https://github.com/rhmsiatpt2526/agorabot.git
+```
+
+---
+
+## Import automatique des dépendances
+
+```bash
+vcs import . < agorabot/agorabot.repos
+```
+
+Cette commande télécharge automatiquement les dépendances externes nécessaires :
+
+- HuNavSim
+- BehaviorTree.CPP
+- BehaviorTree.ROS2
+- lightsfm
+- people
+- etc.
+
+---
+
+## Installation des dépendances ROS
+
+```bash
+cd ~/ros2_ws
+
+rosdep install --from-paths src --ignore-src -r -y
 ```
 
 ---
@@ -204,4 +256,3 @@ ros2 launch agorabot_bringup social_navigation.launch.py
 - intégration MPPI,
 - évaluation expérimentale,
 - vidéo de démonstration.
-

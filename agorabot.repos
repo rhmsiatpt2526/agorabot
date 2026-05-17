@@ -1,0 +1,31 @@
+repositories:
+
+  BehaviorTree.CPP:
+    type: git
+    url: https://github.com/BehaviorTree/BehaviorTree.CPP.git
+    version: master
+
+  BehaviorTree.ROS2:
+    type: git
+    url: https://github.com/BehaviorTree/BehaviorTree.ROS2.git
+    version: humble
+
+  hunav_sim:
+    type: git
+    url: https://github.com/robotics-upo/hunav_sim.git
+    version: humble
+
+  hunav_gazebo_wrapper:
+    type: git
+    url: https://github.com/robotics-upo/hunav_gazebo_wrapper.git
+    version: humble
+
+  people:
+    type: git
+    url: https://github.com/wg-perception/people.git
+    version: ros2
+
+  lightsfm:
+    type: git
+    url: https://github.com/robotics-upo/lightsfm.git
+    version: main
