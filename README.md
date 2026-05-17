@@ -72,16 +72,19 @@ Le robot peut temporairement interrompre sa navigation lorsqu’un humain est tr
 
 ```text
 agorabot/
-├── agorabot_bringup/
-├── agorabot_bt/
-├── agorabot_bt_nodes/
-├── agorabot_navigation/
-├── agorabot_social_layer/
-├── agorabot_social_layer_cpp/
-├── behavior_trees/
-├── maps/
-├── rviz/
-└── worlds/
+├── agorabot_bringup/              # master launch files
+├── agorabot_bt/                   # anciens éléments BT / expérimentation
+├── agorabot_bt_nodes/             # plugins BT Nav2 personnalisés
+├── agorabot_navigation/           # configuration navigation
+├── agorabot_sim/                  # éléments de simulation
+├── agorabot_social_layer/         # noeuds Python sociaux
+├── agorabot_social_layer_cpp/     # plugin C++ SocialLayer Nav2
+├── behavior_trees/                # BT XML Nav2
+├── config/                        # fichiers de configuration
+├── docs/                          # documentation
+├── launch/                        # launch files secondaires
+├── worlds/                        # mondes Gazebo
+└── README.md
 ```
 
 ---
