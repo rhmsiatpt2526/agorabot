@@ -21,6 +21,7 @@ Le projet combine :
 - Social Costmaps
 - Nav2 Costmap Filters
 - Behavior Trees
+- Social Force Models (SFM)
 
 ---
 
@@ -110,6 +111,28 @@ La vitesse du robot peut être réduite localement selon la proximité des humai
 
 ---
 
+## Social Force Models (SFM)
+
+Le projet intègre également un package personnalisé :
+
+```text
+agorabot_sfm
+```
+
+Ce package regroupe :
+
+- l’intégration des modèles SFM,
+- les wrappers ROS2 nécessaires,
+- les adaptations spécifiques au projet.
+
+Le repository est automatiquement téléchargé via :
+
+```text
+agorabot.repos
+```
+
+---
+
 # Structure du projet
 
 ```text
@@ -130,6 +153,16 @@ agorabot/
 ├── agorabot.repos                 # dépendances ROS2 externes
 └── README.md
 ```
+
+Repositories externes téléchargés automatiquement :
+
+- hunav_sim
+- hunav_gazebo_wrapper
+- BehaviorTree.CPP
+- BehaviorTree.ROS2
+- people
+- lightsfm
+- agorabot_sfm
 
 ---
 
@@ -191,6 +224,7 @@ Cette commande télécharge automatiquement les dépendances externes nécessair
 - BehaviorTree.ROS2
 - lightsfm
 - people
+- agorabot_sfm
 - etc.
 
 ---
@@ -242,6 +276,7 @@ ros2 launch agorabot_bringup social_navigation.launch.py
 - [x] Behavior Tree social
 - [x] Nav2 Costmap Filters
 - [x] Zones sociales statiques
+- [x] Intégration SFM
 - [x] Master launch file
 
 ---

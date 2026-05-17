@@ -29,3 +29,8 @@ repositories:
     type: git
     url: https://github.com/robotics-upo/lightsfm.git
     version: main
+  
+  agorabot_sfm:
+    type: git
+    url: https://github.com/rhmsiatpt2526/agorabot_sfm.git
+    version: main
