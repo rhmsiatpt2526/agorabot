@@ -1,0 +1,13 @@
+<library path="social_layer">
+
+  <class
+    type="agorabot_social_layer_cpp::SocialLayer"
+    base_class_type="nav2_costmap_2d::Layer">
+
+    <description>
+      Social navigation layer
+    </description>
+
+  </class>
+
+</library>
