@@ -101,16 +101,60 @@ void SocialLayer::updateCosts(
             continue;
           }
 
-          double distance = std::sqrt(dx * dx + dy * dy);
+        //   double distance = std::sqrt(dx * dx + dy * dy);
 
-          if (distance > radius_cells) {
-            continue;
-          }
+        //   if (distance > radius_cells) {
+        //     continue;
+        //   }
 
-          double normalized = distance / radius_cells;
+        //   double normalized = distance / radius_cells;
 
-          unsigned char cost =
-            static_cast<unsigned char>((1.0 - normalized) * 252.0);
+        //   unsigned char cost =
+        //     static_cast<unsigned char>((1.0 - normalized) * 252.0);
+
+        double vx = human.velocity.linear.x;
+        double vy = human.velocity.linear.y;
+
+        double theta = 0.0;
+
+        if (std::sqrt(vx * vx + vy * vy) > 0.05) {
+        theta = std::atan2(vy, vx);
+        }
+
+        double local_x =
+        std::cos(theta) * dx +
+        std::sin(theta) * dy;
+
+        double local_y =
+        -std::sin(theta) * dx +
+        std::cos(theta) * dy;
+
+        double front_radius = 25.0;
+        double side_radius = 12.0;
+        double back_radius = 8.0;
+
+        double a;
+
+        if (local_x >= 0.0) {
+        a = front_radius;
+        } else {
+        a = back_radius;
+        }
+
+        double ellipse_distance =
+        std::sqrt(
+            (local_x * local_x) / (a * a) +
+            (local_y * local_y) / (side_radius * side_radius)
+        );
+
+        if (ellipse_distance > 1.0) {
+        continue;
+        }
+
+        double normalized = ellipse_distance;
+
+        unsigned char cost =
+        static_cast<unsigned char>((1.0 - normalized) * 252.0);
 
           master_grid.setCost(nx, ny, cost);
         }
