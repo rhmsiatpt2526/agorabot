@@ -66,6 +66,8 @@ class SocialBehaviorNode(Node):
 
         behavior = "NORMAL"
 
+        close_humans = 0
+
         for human in self.humans.agents:
 
             hx = human.position.position.x
@@ -77,12 +79,28 @@ class SocialBehaviorNode(Node):
             distance = math.sqrt(dx * dx + dy * dy)
 
             #
-            # VERY SIMPLE SOCIAL LOGIC
+            # Count nearby humans
             #
 
-            if distance < 1.0:
+            if distance < 1.2:
 
-                behavior = "WAIT"
+                close_humans += 1
+
+        #
+        # SOCIAL DECISION LOGIC
+        #
+
+        if close_humans >= 3:
+
+            behavior = "TRAPPED"
+
+        elif close_humans >= 1:
+
+            behavior = "WAIT"
+
+        else:
+
+            behavior = "NORMAL"
 
         msg = String()
         msg.data = behavior
@@ -92,7 +110,6 @@ class SocialBehaviorNode(Node):
         self.get_logger().info(
             f"Social behavior: {behavior}"
         )
-
 
 def main(args=None):
 
