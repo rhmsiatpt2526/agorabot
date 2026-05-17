@@ -1,8 +1,12 @@
 #ifndef AGORABOT_SOCIAL_LAYER_CPP__SOCIAL_LAYER_HPP_
 #define AGORABOT_SOCIAL_LAYER_CPP__SOCIAL_LAYER_HPP_
 
+#include "rclcpp/rclcpp.hpp"
+
 #include "nav2_costmap_2d/layer.hpp"
 #include "nav2_costmap_2d/layered_costmap.hpp"
+
+#include "hunav_msgs/msg/agents.hpp"
 
 namespace agorabot_social_layer_cpp
 {
@@ -36,6 +40,15 @@ public:
   {
     return false;
   }
+
+private:
+
+  void humansCallback(
+    const hunav_msgs::msg::Agents::SharedPtr msg);
+
+  hunav_msgs::msg::Agents::SharedPtr humans_;
+
+  rclcpp::Subscription<hunav_msgs::msg::Agents>::SharedPtr human_sub_;
 };
 
 }  // namespace agorabot_social_layer_cpp
