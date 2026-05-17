@@ -26,6 +26,7 @@ setup(
         'console_scripts': [
             'human_markers_node = agorabot_social_layer.human_markers_node:main',
             'social_costmap_node = agorabot_social_layer.social_costmap_node:main',
+            'social_behavior_node = agorabot_social_layer.social_behavior_node:main',
         ],
     },
 )

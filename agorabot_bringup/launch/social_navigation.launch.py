@@ -36,8 +36,16 @@ def generate_launch_description():
         output='screen'
     )
 
+    social_behavior_node = Node(
+        package='agorabot_social_layer',
+        executable='social_behavior_node',
+        name='social_behavior_node',
+        output='screen'
+    )
+
     return LaunchDescription([
         hunav_launch,
         human_markers_node,
-        social_costmap_node
+        social_costmap_node,
+        social_behavior_node
     ])
