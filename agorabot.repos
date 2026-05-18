@@ -13,12 +13,12 @@ repositories:
   hunav_sim:
     type: git
     url: https://github.com/robotics-upo/hunav_sim.git
-    version: humble
+    version: v2.0
 
   hunav_gazebo_wrapper:
     type: git
     url: https://github.com/robotics-upo/hunav_gazebo_wrapper.git
-    version: humble
+    version: v2.0
 
   people:
     type: git
@@ -28,9 +28,9 @@ repositories:
   lightsfm:
     type: git
     url: https://github.com/robotics-upo/lightsfm.git
-    version: main
+    version: master
   
   agorabot_sfm:
     type: git
     url: https://github.com/rhmsiatpt2526/agorabot_sfm.git
-    version: main
+    version: master
