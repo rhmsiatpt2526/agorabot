@@ -251,10 +251,15 @@ source install/setup.bash
 
 ---
 
-# Launch
+# Launch normal (3 humains)
 
 ```bash
 ros2 launch agorabot_bringup social_navigation.launch.py
+```
+# Launch variante dense (7 humains)
+
+```bash
+ros2 launch agorabot_bringup social_navigation.launch.py scenario agents_house_dense.yaml
 ```
 
 ---
@@ -285,9 +290,10 @@ ros2 launch agorabot_bringup social_navigation.launch.py
 
 - amélioration des comportements BT,
 - scénarios sociaux complexes,
-- trapped scenario,
-- génération dense d’humains,
+- améliorer les costmap filters,
+- diversification scénarios (e.g. aggresive)
+- amélioration trapped scenario,
 - tuning navigation sociale,
-- intégration MPPI,
-- évaluation expérimentale,
+- intégration MPPI (si possible),
+- évaluation expérimentale plus rigoureuse,
 - vidéo de démonstration.
