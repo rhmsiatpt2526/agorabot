@@ -148,8 +148,6 @@ agorabot/
 ├── config/                        # configs Nav2 / filters
 ├── maps/                          # masks costmap filters
 ├── docs/                          # documentation
-├── launch/                        # launch secondaires
-├── worlds/                        # mondes Gazebo
 ├── agorabot.repos                 # dépendances ROS2 externes
 └── README.md
 ```
@@ -157,12 +155,12 @@ agorabot/
 Repositories externes téléchargés automatiquement :
 
 - hunav_sim
-- hunav_gazebo_wrapper
+- hunav_gazebo_wrapper (fork personnel)
 - BehaviorTree.CPP
 - BehaviorTree.ROS2
 - people
 - lightsfm
-- agorabot_sfm
+- agorabot_sfm (package personnel)
 
 ---
 
