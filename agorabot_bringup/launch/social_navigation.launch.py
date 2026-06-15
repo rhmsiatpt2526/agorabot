@@ -91,7 +91,8 @@ def generate_launch_description():
         parameters=[
             {
                 "yaml_filename": os.path.join(
-                    os.path.expanduser("~/ros2_ws/src/agorabot/maps"),
+                    get_package_share_directory("agorabot_bringup"),
+                    "maps",
                     "social_keepout_mask.yaml",
                 ),
                 "topic_name": "/keepout_filter_mask",

@@ -18,6 +18,10 @@ setup(
             os.path.join('share', package_name, 'launch'),
             glob('launch/*.launch.py')
         ),
+        (
+            os.path.join('share', package_name, 'maps'),
+            glob(os.path.join('..', 'maps', '*'))
+        ),
     ],
     install_requires=['setuptools'],
     zip_safe=True,

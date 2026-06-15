@@ -6,11 +6,11 @@ AgoraBot est un projet de navigation sociale basé sur ROS2, Nav2 et HuNavSim.
 
 L’objectif est de développer un robot mobile capable de naviguer dans un environnement humain dynamique en respectant des contraintes sociales :
 
-- distance interpersonnelle,
-- évitement naturel,
-- adaptation locale du comportement,
-- gestion de zones sociales,
-- recovery behaviors.
+- distance interpersonnelle
+- évitement naturel
+- adaptation locale du comportement
+- gestion de zones sociales
+- recovery behaviors
 
 Le projet combine :
 
@@ -23,7 +23,125 @@ Le projet combine :
 - Behavior Trees
 - Social Force Models (SFM)
 
+Il doit s'exécuter de préférence sur Ubuntu-22.04 Humble, le développement a été fait sur Windows 11 avec WSL. Le développement peut se faire via WSL dans VS Code.
 ---
+
+# Installation
+
+Veuillez suivre rigoureusement les étapes suivantes d'installation dans l'ordre afin de garantir le succès de la simulation.
+
+## Dépendances système
+
+```bash
+sudo apt update
+
+sudo apt install ros-humble-nav2*
+sudo apt install ros-humble-navigation2
+sudo apt install ros-humble-behaviortree-cpp-v3
+sudo apt install ros-humble-gazebo-ros-pkgs
+sudo apt install python3-vcstool
+sudo apt install python3-rosdep
+```
+
+## Création du workspace
+
+De préférence, utiliser un workspace du nom de "ros2_ws":
+
+```bash
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws
+```
+
+---
+
+## Clone du projet
+Le git du projet est public et ne devrait donc présenter aucun soucis de téléchargement.
+```bash
+cd src
+
+git clone https://github.com/rhmsiatpt2526/agorabot.git
+```
+
+---
+
+## Import automatique des dépendances
+
+```bash
+vcs import --debug . < agorabot/agorabot.repos
+```
+
+Cette commande télécharge automatiquement les dépendances externes nécessaires :
+
+- HuNavSim
+- BehaviorTree.CPP
+- BehaviorTree.ROS2
+- lightsfm
+- people
+- agorabot_sfm
+- etc.
+Le paramètre debug est optionel et permet juste d'avoir plus de détails lors de l'import.
+---
+
+## Installation des dépendances ROS
+
+```bash
+cd ~/ros2_ws
+
+rosdep install --from-paths src --ignore-src -r -y
+```
+
+---
+
+## Build
+
+```bash
+cd ~/ros2_ws
+
+colcon build --symlink-install
+
+source install/setup.bash
+```
+
+---
+
+# Lancement
+
+## Launch normal (3 humains)
+
+Lancez en priorité cette version, plus légère que la version dense (notamment en termes de simulation gazebo).
+
+```bash
+ros2 launch agorabot_bringup social_navigation.launch.py
+```
+## Launch variante dense (7 humains)
+
+Une autre version avec 7 humains sur la map est disponible sous réserve de ressources suffisantes.
+
+```bash
+ros2 launch agorabot_bringup social_navigation.launch.py scenario agents_house_dense.yaml
+```
+--- 
+## Bug fix spawn humains
+
+En cas de bug où au démarrage tous les humains spawnent au même endroit sur le robot, ce qui arrive parfois, faire le reset complet suivant : 
+
+```bash
+pkill -f ros2
+pkill -f gazebo
+pkill -f gzserver
+pkill -f gzclient
+pkill -f rviz2
+pkill -f python3
+
+ros2 daemon stop
+ros2 daemon start
+
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+```
+---
+
 
 # Fonctionnalités actuelles
 
@@ -113,7 +231,7 @@ La vitesse du robot peut être réduite localement selon la proximité des humai
 
 ## Social Force Models (SFM)
 
-Le projet intègre également un package personnalisé :
+Le projet intègre également un package d'adaptation léger et personnalisé :
 
 ```text
 agorabot_sfm
@@ -145,7 +263,6 @@ agorabot/
 ├── behavior_trees/                # BT XML Nav2
 ├── config/                        # configs Nav2 / filters
 ├── maps/                          # masks costmap filters
-├── docs/                          # documentation
 ├── agorabot.repos                 # dépendances ROS2 externes
 └── README.md
 ```
@@ -162,103 +279,6 @@ Repositories externes téléchargés automatiquement :
 
 ---
 
-# Dépendances système
-
-## ROS2
-
-- ROS2 Humble
-- Nav2
-- Gazebo Classic
-- behaviortree_cpp_v3
-
-Installation typique :
-
-```bash
-sudo apt update
-
-sudo apt install ros-humble-nav2*
-sudo apt install ros-humble-navigation2
-sudo apt install ros-humble-behaviortree-cpp-v3
-sudo apt install ros-humble-gazebo-ros-pkgs
-sudo apt install python3-vcstool
-sudo apt install python3-rosdep
-```
-
----
-
-# Installation
-
-## Création du workspace
-
-```bash
-mkdir -p ~/ros2_ws/src
-cd ~/ros2_ws
-```
-
----
-
-## Clone du projet
-
-```bash
-cd src
-
-git clone https://github.com/rhmsiatpt2526/agorabot.git
-```
-
----
-
-## Import automatique des dépendances
-
-```bash
-vcs import . < agorabot/agorabot.repos
-```
-
-Cette commande télécharge automatiquement les dépendances externes nécessaires :
-
-- HuNavSim
-- BehaviorTree.CPP
-- BehaviorTree.ROS2
-- lightsfm
-- people
-- agorabot_sfm
-- etc.
-
----
-
-## Installation des dépendances ROS
-
-```bash
-cd ~/ros2_ws
-
-rosdep install --from-paths src --ignore-src -r -y
-```
-
----
-
-# Build
-
-```bash
-cd ~/ros2_ws
-
-colcon build --symlink-install
-
-source install/setup.bash
-```
-
----
-
-# Launch normal (3 humains)
-
-```bash
-ros2 launch agorabot_bringup social_navigation.launch.py
-```
-# Launch variante dense (7 humains)
-
-```bash
-ros2 launch agorabot_bringup social_navigation.launch.py scenario agents_house_dense.yaml
-```
-
----
 
 # Avancement du projet
 
