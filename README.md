@@ -27,7 +27,7 @@ Le projet combine :
 
 # Installation
 
-Veuillez suivre rigoureusement les étapes suivantes d'installation dans l'ordre afin de garantir le succès de la simulation.
+Veuillez suivre rigoureusement les étapes suivantes d'installation dans l'ordre conseillé afin de garantir le succès de la simulation.
 
 Le projet doit s'exécuter de préférence sur Ubuntu-22.04 Humble, le développement a été fait sur Windows 11 avec WSL. Le développement peut se faire via WSL dans VS Code.
 
@@ -46,7 +46,7 @@ sudo apt install python3-rosdep
 
 ## Création du workspace
 
-De préférence, utiliser un workspace du nom de "ros2_ws":
+De préférence, utiliser un workspace du nom de "ros2_ws", mais tout autre nom est également valide:
 
 ```bash
 mkdir -p ~/ros2_ws/src
