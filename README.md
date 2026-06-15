@@ -125,8 +125,14 @@ ros2 launch agorabot_bringup social_navigation.launch.py launch_gazebo_gui:=Fals
 Une autre version avec 7 humains sur la map est disponible sous réserve de ressources suffisantes.
 
 ```bash
-ros2 launch agorabot_bringup social_navigation.launch.py scenario agents_house_dense.yaml
+ros2 launch agorabot_bringup social_navigation.launch.py scenario:=agents_house_dense.yaml
 ```
+Version sans client Gazebo : 
+```bash
+ros2 launch agorabot_bringup social_navigation.launch.py scenario:=agents_house_dense.yaml launch_gazebo_gui:=False
+```
+
+
 --- 
 ## Bug fix spawn humains
 
