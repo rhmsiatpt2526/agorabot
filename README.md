@@ -114,6 +114,12 @@ Lancez en priorité cette version, plus légère que la version dense (notamment
 ```bash
 ros2 launch agorabot_bringup social_navigation.launch.py
 ```
+Par défaut, le client Gazebo (son interface graphique) s'affiche avec Rviz suite au lancement. Cependant, afin de limiter les ressources nécessaires à la simulation, il est possible d'empêcher l'affichage de gazebo. Pour ce faire, mettez sur False l'argument optionnel (True est équivalent au lancement par défaut). 
+
+```bash
+ros2 launch agorabot_bringup social_navigation.launch.py launch_gazebo_gui:=False
+```
+
 ## Launch variante dense (7 humains)
 
 Une autre version avec 7 humains sur la map est disponible sous réserve de ressources suffisantes.

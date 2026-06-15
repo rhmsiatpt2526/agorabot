@@ -28,6 +28,18 @@ def generate_launch_description():
     scenario = LaunchConfiguration("scenario")
 
     #
+    # Gazebo GUI argument
+    #
+
+    launch_gazebo_gui_arg = DeclareLaunchArgument(
+        "launch_gazebo_gui",
+        default_value="True",
+        description="Launch Gazebo GUI client (True/False). Set to False to reduce CPU/GPU load.",
+    )
+
+    launch_gazebo_gui = LaunchConfiguration("launch_gazebo_gui")
+
+    #
     # RViz config
     #
 
@@ -43,7 +55,10 @@ def generate_launch_description():
                 "small_house.launch.py",
             )
         ),
-        launch_arguments={"configuration_file": scenario}.items(),
+        launch_arguments={
+            "configuration_file": scenario,
+            "launch_gazebo_gui": launch_gazebo_gui,
+        }.items(),
     )
 
     #
@@ -149,6 +164,7 @@ def generate_launch_description():
     return LaunchDescription(
         [
             scenario_arg,
+            launch_gazebo_gui_arg,
             hunav_launch,
             human_markers_node,
             social_costmap_node,
