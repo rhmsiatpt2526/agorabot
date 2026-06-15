@@ -270,7 +270,6 @@ agorabot.repos
 agorabot/
 ├── agorabot_bringup/              # launch principal
 ├── agorabot_bt_nodes/             # plugins BT personnalisés
-├── agorabot_navigation/           # configuration Nav2
 ├── agorabot_social_layer/         # noeuds Python sociaux
 ├── agorabot_social_layer_cpp/     # plugin C++ SocialLayer
 ├── behavior_trees/                # BT XML Nav2
