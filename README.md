@@ -23,12 +23,13 @@ Le projet combine :
 - Behavior Trees
 - Social Force Models (SFM)
 
-Il doit s'exécuter de préférence sur Ubuntu-22.04 Humble, le développement a été fait sur Windows 11 avec WSL. Le développement peut se faire via WSL dans VS Code.
 ---
 
 # Installation
 
 Veuillez suivre rigoureusement les étapes suivantes d'installation dans l'ordre afin de garantir le succès de la simulation.
+
+Le projet doit s'exécuter de préférence sur Ubuntu-22.04 Humble, le développement a été fait sur Windows 11 avec WSL. Le développement peut se faire via WSL dans VS Code.
 
 ## Dépendances système
 
