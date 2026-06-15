@@ -22,6 +22,10 @@ setup(
             os.path.join('share', package_name, 'maps'),
             glob(os.path.join('..', 'maps', '*'))
         ),
+        (
+            os.path.join('share', package_name, 'behavior_trees'),
+            glob(os.path.join('..', 'behavior_trees', '*.xml'))
+        ),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
