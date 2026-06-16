@@ -134,9 +134,9 @@ ros2 launch agorabot_bringup social_navigation.launch.py scenario:=agents_house_
 
 
 --- 
-## Bug fix spawn humains
+## Bug fix 
 
-En cas de bug où au démarrage tous les humains spawnent au même endroit sur le robot, ce qui arrive parfois, faire le reset complet suivant : 
+En cas de bug, typiquement quand au démarrage tous les humains spawnent au même endroit sur le robot, faire le reset complet suivant puis relancer launch : 
 
 ```bash
 pkill -f ros2
@@ -152,6 +152,11 @@ ros2 daemon start
 cd ~/ros2_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
+```
+
+Pour lancer avec fichier de log enregistré pour analyse :
+```bash
+ros2 launch agorabot_bringup social_navigation.launch.py --debug 2>&1 | tee launch_debug_log.txt
 ```
 ---
 
