@@ -16,12 +16,12 @@ Le projet combine :
 
 - ROS2 Humble
 - Nav2
+- Social Force Models (SFM)
 - Gazebo
+- Rviz2
 - HuNavSim
 - Social Costmaps
-- Nav2 Costmap Filters
-- Behavior Trees
-- Social Force Models (SFM)
+- Behavior Tree social
 
 ---
 
@@ -78,8 +78,9 @@ Cette commande télécharge automatiquement les dépendances externes nécessair
 - BehaviorTree.ROS2
 - lightsfm
 - people
-- agorabot_sfm
-- etc.
+- agorabot_sfm (package personnel)
+- hunav_gazebo_wrapper (fork personnel)
+
 Le paramètre debug est optionel et permet juste d'avoir plus de détails lors de l'import.
 ---
 
@@ -109,7 +110,7 @@ source install/setup.bash
 
 ## Launch normal (3 humains)
 
-Lancez en priorité cette version, plus légère que la version dense (notamment en termes de simulation gazebo).
+Lancez en priorité cette version, plus légère que la version dense (notamment en termes de simulations gazebo).
 
 ```bash
 ros2 launch agorabot_bringup social_navigation.launch.py
@@ -136,7 +137,8 @@ ros2 launch agorabot_bringup social_navigation.launch.py scenario:=agents_house_
 --- 
 ## Bug fix 
 
-En cas de bug, typiquement quand au démarrage tous les humains spawnent au même endroit sur le robot, faire le reset complet suivant puis relancer launch : 
+En cas de bug, typiquement quand au démarrage tous les humains spawnent au même endroit sur le robot, faire le reset complet suivant puis relancer launch. 
+Il est conseillé de faire ce reset avant chaque nouveau run.
 
 ```bash
 pkill -f ros2
@@ -195,25 +197,7 @@ Fonctionnalités :
 - costmap sociale dynamique,
 - proxémie elliptique anisotrope,
 - orientation selon la vitesse des humains,
-- intégration dans la local_costmap Nav2.
-
----
-
-## Costmap Filters Nav2
-
-Des keepout filters Nav2 ont été intégrés.
-
-Fonctionnalités :
-
-- définition de zones sociales interdites,
-- contraintes spatiales statiques,
-- intégration dans global_costmap et local_costmap,
-- mask server + filter info server.
-
-Le projet combine donc :
-
-- zones sociales dynamiques (humains),
-- zones sociales statiques (costmap filters).
+- intégration dans les local et global costmap Nav2.
 
 ---
 
@@ -225,6 +209,7 @@ Un comportement social simple a été intégré au BT Nav2.
 
 - NORMAL
 - WAIT
+- TRAPPED
 
 Le robot peut temporairement interrompre sa navigation lorsqu’un humain est trop proche.
 
@@ -238,12 +223,6 @@ Des comportements de récupération Nav2 sont utilisés :
 - wait,
 - retry,
 - backoff.
-
----
-
-## Adaptive velocity
-
-La vitesse du robot peut être réduite localement selon la proximité des humains.
 
 ---
 
@@ -279,7 +258,7 @@ agorabot/
 ├── agorabot_social_layer_cpp/     # plugin C++ SocialLayer
 ├── behavior_trees/                # BT XML Nav2
 ├── config/                        # configs Nav2 / filters
-├── maps/                          # masks costmap filters
+├── maps/                          # masks costmap filters (non utilisés)
 ├── agorabot.repos                 # dépendances ROS2 externes
 └── README.md
 ```
@@ -307,26 +286,21 @@ Repositories externes téléchargés automatiquement :
 - [x] Visualisation RViz
 - [x] Social costmap dynamique
 - [x] SocialLayer Nav2 personnalisée
-- [x] Zones sociales elliptiques orientées
-- [x] Navigation sociale locale
-- [x] Adaptive velocity
-- [x] Recovery behaviors Nav2
-- [x] Behavior Tree social
-- [x] Nav2 Costmap Filters
-- [x] Zones sociales statiques
+- [x] Zones sociales elliptiques anisotropes orientées
+- [x] Navigation sociale locale et globale
+- [x] Behavior Tree social avec recovery behaviors
 - [x] Intégration SFM
+- [x] Vidéos de démonstration
 - [x] Master launch file
 
 ---
 
 # Travail restant
 
-- amélioration des comportements BT,
-- scénarios sociaux complexes,
-- améliorer les costmap filters,
+- amélioration des comportements BT
+- scénarios sociaux complexes
 - diversification scénarios (e.g. aggresive)
-- amélioration trapped scenario,
-- tuning navigation sociale,
-- intégration MPPI (si possible),
-- évaluation expérimentale plus rigoureuse,
-- vidéo de démonstration.
+- amélioration trapped scenario
+- tuning navigation sociale
+- intégration MPPI (si possible)
+- évaluation expérimentale quantitative
