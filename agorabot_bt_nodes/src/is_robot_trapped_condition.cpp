@@ -31,13 +31,21 @@ public:
 
   BT::NodeStatus tick() override
   {
+    rclcpp::spin_some(node_);
+
+    RCLCPP_WARN(
+      node_->get_logger(),
+      "BT TICK IsRobotTrapped | last_behavior = %s",
+      last_behavior_.c_str()
+    );
+
     if (last_behavior_ == "TRAPPED") {
       return BT::NodeStatus::SUCCESS;
     }
 
     return BT::NodeStatus::FAILURE;
   }
-
+  
 private:
   rclcpp::Node::SharedPtr node_;
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_;

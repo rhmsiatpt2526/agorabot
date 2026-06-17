@@ -31,6 +31,14 @@ public:
 
   BT::NodeStatus tick() override
   {
+    rclcpp::spin_some(node_);
+
+    RCLCPP_WARN(
+      node_->get_logger(),
+      "BT TICK IsSocialWait | last_behavior = %s",
+      last_behavior_.c_str()
+    );
+
     if (last_behavior_ == "WAIT") {
       return BT::NodeStatus::SUCCESS;
     }

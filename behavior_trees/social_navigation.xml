@@ -1,7 +1,9 @@
 <!--
-  This Behavior Tree replans the global path periodically at 1 Hz and it also has
-  recovery actions specific to planning / control as well as general system issues.
-  This will be continuous if a kinematically valid planner is selected.
+  Social navigation Behavior Tree.
+  Priority:
+  1. If the robot is trapped -> recovery actions
+  2. If a human is too close -> wait
+  3. Otherwise -> normal Nav2 navigation with replanning
 -->
 
 <root main_tree_to_execute="MainTree">
@@ -10,73 +12,79 @@
 
     <RecoveryNode number_of_retries="6" name="NavigateRecovery">
 
-      <PipelineSequence name="NavigateWithReplanning">
+      <ReactiveFallback name="SocialNavigation">
 
-        <ReactiveFallback name="SocialBehavior">
+        <!-- CAS 1 : robot complètement bloqué -->
+        <Sequence name="TrappedRecovery">
 
-          <!-- CAS 1 : robot complètement bloqué -->
-          <Sequence name="TrappedRecovery">
+          <IsRobotTrapped/>
 
-            <IsRobotTrapped/>
+          <ClearEntireCostmap
+            name="ClearLocalCostmap-Trapped"
+            service_name="local_costmap/clear_entirely_local_costmap"/>
 
-            <ClearEntireCostmap
-              name="ClearLocalCostmap-Trapped"
-              service_name="local_costmap/clear_entirely_local_costmap"/>
+          <BackUp
+            backup_dist="0.40"
+            backup_speed="0.08"/>
 
-            <BackUp
-              backup_dist="0.40"
-              backup_speed="0.08"/>
+          <Spin spin_dist="1.57"/>
 
-            <Spin spin_dist="1.57"/>
+          <Wait wait_duration="2"/>
 
-            <Wait wait_duration="2"/>
+        </Sequence>
 
-          </Sequence>
+        <!-- CAS 2 : humain proche -->
+        <Sequence name="SocialWait">
 
-          <!-- CAS 2 : humain proche -->
-          <Sequence name="SocialWait">
+          <IsSocialWait/>
 
-            <IsSocialWait/>
+          <ClearEntireCostmap
+            name="ClearLocalCostmap-SocialWait"
+            service_name="local_costmap/clear_entirely_local_costmap"/>
 
-            <Wait wait_duration="2"/>
+          <BackUp
+            backup_dist="0.40"
+            backup_speed="0.10"/>
 
-          </Sequence>
+          <Wait wait_duration="1"/>
 
-          <!-- CAS NORMAL -->
-          <AlwaysSuccess/>
+        </Sequence>
 
-        </ReactiveFallback>
-        
-        <RateController hz="1.0">
+        <!-- CAS NORMAL : navigation Nav2 -->
+        <PipelineSequence name="NavigateWithReplanning">
 
-          <RecoveryNode number_of_retries="1" name="ComputePathToPose">
+          <RateController hz="1.0">
 
-            <ComputePathToPose
-              goal="{goal}"
+            <RecoveryNode number_of_retries="1" name="ComputePathToPose">
+
+              <ComputePathToPose
+                goal="{goal}"
+                path="{path}"
+                planner_id="GridBased"/>
+
+              <ClearEntireCostmap
+                name="ClearGlobalCostmap-Context"
+                service_name="global_costmap/clear_entirely_global_costmap"/>
+
+            </RecoveryNode>
+
+          </RateController>
+
+          <RecoveryNode number_of_retries="1" name="FollowPath">
+
+            <FollowPath
               path="{path}"
-              planner_id="GridBased"/>
+              controller_id="FollowPath"/>
 
             <ClearEntireCostmap
-              name="ClearGlobalCostmap-Context"
-              service_name="global_costmap/clear_entirely_global_costmap"/>
+              name="ClearLocalCostmap-Context"
+              service_name="local_costmap/clear_entirely_local_costmap"/>
 
           </RecoveryNode>
 
-        </RateController>
+        </PipelineSequence>
 
-        <RecoveryNode number_of_retries="1" name="FollowPath">
-
-          <FollowPath
-            path="{path}"
-            controller_id="FollowPath"/>
-
-          <ClearEntireCostmap
-            name="ClearLocalCostmap-Context"
-            service_name="local_costmap/clear_entirely_local_costmap"/>
-
-        </RecoveryNode>
-
-      </PipelineSequence>
+      </ReactiveFallback>
 
       <ReactiveFallback name="RecoveryFallback">
 
